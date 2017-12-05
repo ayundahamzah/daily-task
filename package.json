@@ -1,0 +1,26 @@
+{
+  "name": "daily-task",
+  "version": "1.0.0",
+  "description": "pair-project(phase1-2)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayundahamzah/daily-task.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ayundahamzah/daily-task/issues"
+  },
+  "homepage": "https://github.com/ayundahamzah/daily-task#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "pg": "^6.4.2",
+    "sequelize": "^4.26.0"
+  }
+}
