@@ -4,15 +4,14 @@ module.exports = (sequelize, DataTypes) => {
     UserId: DataTypes.INTEGER,
     TaskId: DataTypes.INTEGER,
     status: DataTypes.STRING,
-    real - time - of -work: DataTypes.INTEGER,
-    owner - income: DataTypes.INTEGER,
-    employee - income: DataTypes.INTEGER
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-      }
-    }
+    realTimeOfWork: DataTypes.INTEGER,
+    ownerIncome: DataTypes.INTEGER,
+    employeeIncome: DataTypes.INTEGER
+  }
   });
+  UserTask.associate = function(models){
+    UserTask.belongsTo(models.Task)
+    UserTask.belongsTo(models.Task)
+  }
   return UserTask;
 };

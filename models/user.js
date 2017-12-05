@@ -5,12 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     name: DataTypes.STRING,
     role: DataTypes.STRING
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-      }
-    }
+  }
   });
   User.associate = function(models){
     User.belongsToMany(models.Task, {through:"UserTask"})
