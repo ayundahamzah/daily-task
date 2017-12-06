@@ -23,10 +23,20 @@ router.get('/:id/profile/edit', function(req, res){
   })
 })
 router.post('/:id/profile/edit', function(req, res){
+  let userId = req.params.id
   let user = {
-    
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password
   }
-  Model.User.update()
+  Model.User.update({
+    name:user.name,
+    email:user.email,
+    password:user.password
+  },{where:{id:userId}})
+  .then(function(){
+    res.redirect(`/users/${userId}/profile`)
+  })
 })
 
 
