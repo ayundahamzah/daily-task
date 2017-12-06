@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Employee Number <%= id %> Report</title>
+  </head>
+  <body><center>
+    <table border='1'>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+      </tr>
+      <tr>
+        <td><%= id %></td>
+        <td>Employee Number <%= id %></td>
+      </tr>
+    </table>
+    <h2>Task History</h2>
+    <table border='1'>
+      <tr>
+        <th>ID</th>
+        <th>Task Name</th>
+        <th>Estimated Time</th>
+        <th>Real Time</th>
+        <th>Income</th>
+      </tr>
+      <% for(let i= 1; i < 10; i++) { %>
+        <tr>
+          <td><%= i %></td>
+          <td>Dummy Task <%= i %></td>
+          <td><%= i*5 %> minutes</td>
+          <td><%= i*4.5 %> minutes</td>
+          <td>Rp <%= i*12500 %></td>
+        </tr>
+      <% } %>
+    </table>
+    <p>Total Task: </p>
+    <p>Total Income: </p>
+    <p>Average Estimated Time: </p>
+    <p>Average Real Time: </p>
+  </center></body>
+</html>
