@@ -12,7 +12,8 @@ router.get('/profile', function(req, res){
 })
 
 router.get('/profile/:id/edit', function(req, res){
-  res.send('edit')
+  // res.send('edit')
+  res.render('profileEdit')
 })
 
 router.get('/report/:id/employee', function(req, res){
@@ -31,9 +32,26 @@ router.get('/employeeList', function(req, res){
 })
 
 router.get('/assignTask', function(req, res){
-  // res.send('assignTask')
-  res.render('assignTask')
+  //Model.User.findAll({where:{ }}) //rolenya:'employee', statusnya bukan 'idle' atau 'on progress'. Untuk nampilin dropdown user yg available
+  Model.User.findAll().then(function(dataUsers){
+    Model.Task.findAll().then(function(dataTasks){
+      // res.send(data)
+      res.render('assignTask',{dataUsers:dataUsers, dataTasks:dataTasks})
+    })
+  })
 })
+router.post('/assignTask', function(req, res){
+  let input = {
+    userId: req.body.userId,
+    taskId: req.body.taskId,
+    status: 'idle',
+    createdBy: 'Owner'
+  }
+  Model.UserTask.create({UserId: input.userId, TaskId: input.taskId, status: input.status, createdBy: input.createdBy}).then(function(){
+    res.redirect('/users/assignTask')
+  })
+})
+
 
 router.get('/viewTask', function(req, res){
   // res.send('viewTask')
@@ -41,8 +59,11 @@ router.get('/viewTask', function(req, res){
 })
 
 router.get('/monitorTask', function(req, res){
-  // res.send('monitorTask')
-  res.render('monitorTask')
+  Model.UserTask.findAll({include:[Model.User, Model.Task]})
+  .then(function(data){
+    // res.send(data)
+    res.render('monitorTask', {dataUserTasks:data})
+  })
 })
 
 

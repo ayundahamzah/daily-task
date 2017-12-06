@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     employeeIncome: DataTypes.INTEGER
   });
   UserTask.associate = function(models){
-    UserTask.belongsTo(models.Task)
+    UserTask.belongsTo(models.User)
     UserTask.belongsTo(models.Task)
   }
   return UserTask;
