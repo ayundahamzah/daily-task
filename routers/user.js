@@ -50,9 +50,16 @@ router.get('/report/:id/employee', function(req, res){
 })
 
 router.get('/report/:id/owner', function(req, res){
-  // res.send('owner')
-  res.render('ownerReport')
+  Model.User.findById(1).then(function(data){
+    // res.send(data.createdAt)
+    res.render('ownerReport')
+  })
 })
+router.post('/report/:id/owner', function(req, res){
+  // console.log(typeof req.body.start);
+  res.send(req.body)
+})
+
 
 router.get('/employeeList', function(req, res){
   Model.User.findAll({where:{role:'employee'},order:[['name','ASC']]}).then(function(data){
