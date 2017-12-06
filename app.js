@@ -1,6 +1,7 @@
 const express=require('express');
 const app = express();
 const bodyParser =require('body-parser')
+const session = require('express-session')
 
 const home = require('./routers/home.js');
 const user = require('./routers/user.js');
@@ -20,7 +21,9 @@ app.set('view engine','ejs')
 
 app.use('/',home)
 app.use('/users',user)
-
+app.use(session({
+  secret: 'keyboard cat'
+}))
 
 
 
