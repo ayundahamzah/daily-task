@@ -9,28 +9,63 @@ router.get('/', function(req, res){
 })
 
 router.get('/:id/profile', function(req, res){
-  // res.send('profile')
-  res.render('profile')
+  let userId = req.params.id
+  Model.User.findById(userId).then(function(data){
+    // res.send(data)
+    res.render('profile',{dataUser:data})
+  })
 })
 
 router.get('/:id/profile/edit', function(req, res){
-  // res.send('edit')
-  res.render('profileEdit')
+  let userId = req.params.id
+  Model.User.findById(userId).then(function(data){
+    res.render('profileEdit',{dataUser:data})
+  })
+})
+router.post('/:id/profile/edit', function(req, res){
+  let userId = req.params.id
+  let user = {
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password
+  }
+  Model.User.update({
+    name:user.name,
+    email:user.email,
+    password:user.password
+  },{where:{id:userId}})
+  .then(function(){
+    res.redirect(`/users/${userId}/profile`)
+  })
 })
 
+
 router.get('/report/:id/employee', function(req, res){
-  // res.send('employee')
-  res.render('employeeReport', {id:req.params.id})
+  let userId = req.params.id
+  Model.User.findById(userId).then(function(dataUser){
+    Model.UserTask.findAll({where:{UserId:userId, status:'done'}, include:[Model.Task]}).then(function(dataUserTask){
+      res.render('employeeReport', {dataUser:dataUser, dataUserTask:dataUserTask})
+    })
+  })
 })
 
 router.get('/report/:id/owner', function(req, res){
-  // res.send('owner')
-  res.render('ownerReport')
+  Model.User.findById(1).then(function(data){
+    // res.send(data.createdAt)
+    res.render('ownerReport')
+  })
+})
+router.post('/report/:id/owner', function(req, res){
+  // console.log(typeof req.body.start);
+  res.send(req.body)
 })
 
+
 router.get('/employeeList', function(req, res){
-  // res.send('employeeList')
-  res.render('employeeList')
+  Model.User.findAll({where:{role:'employee'},order:[['name','ASC']]}).then(function(data){
+    // res.send(data)
+    res.render('employeeList',{dataUsers:data})
+  })
 })
 
 router.get('/assignTask', function(req, res){
