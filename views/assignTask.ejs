@@ -16,7 +16,9 @@
           <td>
           <select class="" name="userId">
             <% dataUsers.forEach(function(user){ %>
-              <option value="<%= user.id %>"><%= user.name %></option>
+              <% if(user.UserTasks == '' || user.UserTasks.status == 'done') { %>
+                <option value="<%= user.id %>"><%= user.name %></option>
+              <% } %>
             <% }) %>
           </select>
           </td>

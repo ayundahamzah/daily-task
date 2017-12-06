@@ -7,15 +7,20 @@
   <body><center>
     <h2>Today Task</h2>
     <fieldset style='width: 20%'>
-    <h3>Task Dummy</h3>
-    <p>Estimated Time in minutes</p>
+    <h3><%= dataTask.Task %></h3>
+    <p><%= dataTask.estimatedTimeOfWork %> minutes</p>
   </fieldset>
   <br>
-    <form class="" action="index.html" method="post">
-      Status: <select class="" name="">
-        <option value="">Idle</option>
-        <option value="">On Progress</option>
-        <option value="">Done</option>
+    <form class="" action="/users/<%= dataToday.UserId %>/viewTask/<%= dataToday.TaskId %>" method="post">
+      <% let status = ['idle','on-progress','done'] %>
+      Status: <select class="" name="status">
+        <% for(let i = 0; i < status.length; i++){ %>
+          <% if(status[i] == dataToday.status){ %>
+            <option value="<%= dataToday.status %>" selected><%= dataToday.status %></option>
+          <% } else { %>
+            <option value="<%= status[i] %>"><%= status[i] %></option>
+            <% }%>
+          <% } %>
       </select>
       <br><br>
       <input type="submit" name="" value="Apply">

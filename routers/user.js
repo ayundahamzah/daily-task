@@ -1,17 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const Model = require('../models');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op
 
 router.get('/', function(req, res){
   res.send('users')
 })
 
-router.get('/profile', function(req, res){
+router.get('/:id/profile', function(req, res){
   // res.send('profile')
   res.render('profile')
 })
 
-router.get('/profile/:id/edit', function(req, res){
+router.get('/:id/profile/edit', function(req, res){
   // res.send('edit')
   res.render('profileEdit')
 })
@@ -33,9 +35,9 @@ router.get('/employeeList', function(req, res){
 
 router.get('/assignTask', function(req, res){
   //Model.User.findAll({where:{ }}) //rolenya:'employee', statusnya bukan 'idle' atau 'on progress'. Untuk nampilin dropdown user yg available
-  Model.User.findAll().then(function(dataUsers){
+  Model.User.findAll({include: [Model.UserTask]}).then(function(dataUsers){
     Model.Task.findAll().then(function(dataTasks){
-      // res.send(data)
+      // res.send(dataUsers)
       res.render('assignTask',{dataUsers:dataUsers, dataTasks:dataTasks})
     })
   })
@@ -53,15 +55,23 @@ router.post('/assignTask', function(req, res){
 })
 
 
-router.get('/viewTask', function(req, res){
-  // res.send('viewTask')
-  res.render('viewTask')
+router.get('/:idUser/viewTask/:idTask', function(req, res){
+  Model.UserTask.findAll({where:{UserId: req.params.idUser,TaskId:req.params.idTask, status: {[Sequelize.Op.ne]: 'done'}}}).then(function(dataUserTasks){
+    Model.Task.find({where:{id:req.params.idTask}}).then(function(dataTask){
+      res.render('viewTask',{dataToday:dataUserTasks[0], dataTask:dataTask})
+    })
+  })
 })
+router.post('/:idUser/viewTask/:idTask', function(req, res){
+  Model.UserTask.update(req.body,{where:{UserId:req.params.idUser, TaskId: req.params.idTask}}).then(function(){
+    res.redirect(`/users/${req.params.idUser}/viewTask/${req.params.idTask}`)
+  })
+})
+
 
 router.get('/monitorTask', function(req, res){
   Model.UserTask.findAll({include:[Model.User, Model.Task]})
   .then(function(data){
-    // res.send(data)
     res.render('monitorTask', {dataUserTasks:data})
   })
 })
