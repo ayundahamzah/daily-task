@@ -7,7 +7,8 @@ router.get('/', function(req, res){
 })
 
 router.get('/profile', function(req, res){
-  res.send('profile')
+  // res.send('profile')
+  res.render('profile')
 })
 
 router.get('/profile/:id/edit', function(req, res){
