@@ -14,15 +14,15 @@
         <th>Status</th>
         <th>ETA</th>
       </tr>
-      <% for(let i = 1; i < 9; i++){ %>
+      <% dataUserTasks.forEach(function(userTask){ %>
         <tr>
-          <td><%= i %></td>
-          <td>Dummy <%= i %></td>
-          <td>Task <%= i %></td>
-          <td>Idle</td>
-          <td><%= i*5 %> minutes</td>
+          <td></td>
+          <td><%= userTask.User.name %></td>
+          <td><%= userTask.Task.Task %></td>
+          <td><%= userTask.status %></td>
+          <td><%= userTask.Task.estimatedTimeOfWork %> minutes</td>
         </tr>
-      <% } %>
+      <% }) %>
     </table>
   </center></body>
 </html>

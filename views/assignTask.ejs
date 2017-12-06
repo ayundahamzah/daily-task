@@ -12,29 +12,19 @@
         <th></th>
       </tr>
       <tr>
-        <form class="" action="index.html" method="post">
+        <form class="" action="/users/assignTask" method="post">
           <td>
-          <select class="" name="">
-            <option value="">Dummy 1</option>
-            <option value="">Dummy 2</option>
-            <option value="">Dummy 3</option>
-            <option value="">Dummy 4</option>
-            <option value="">Dummy 5</option>
-            <option value="">Dummy 6</option>
-            <option value="">Dummy 7</option>
-            <option value="">Dummy 8</option>
+          <select class="" name="userId">
+            <% dataUsers.forEach(function(user){ %>
+              <option value="<%= user.id %>"><%= user.name %></option>
+            <% }) %>
           </select>
           </td>
           <td>
-          <select class="" name="">
-            <option value="">Dummy 1</option>
-            <option value="">Dummy 2</option>
-            <option value="">Dummy 3</option>
-            <option value="">Dummy 4</option>
-            <option value="">Dummy 5</option>
-            <option value="">Dummy 6</option>
-            <option value="">Dummy 7</option>
-            <option value="">Dummy 8</option>
+          <select class="" name="taskId">
+            <% dataTasks.forEach(function(task){ %>
+              <option value="<%= task.id %>"><%= task.Task %></option>
+            <% }) %>
           </select>
           </td>
           <td>
