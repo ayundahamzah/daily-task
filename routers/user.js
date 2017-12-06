@@ -41,6 +41,7 @@ router.post('/:id/profile/edit', function(req, res){
 
 
 router.get('/report/:id/employee', function(req, res){
+  
   // res.send('employee')
   res.render('employeeReport', {id:req.params.id})
 })
@@ -51,8 +52,10 @@ router.get('/report/:id/owner', function(req, res){
 })
 
 router.get('/employeeList', function(req, res){
-  // res.send('employeeList')
-  res.render('employeeList')
+  Model.User.findAll({where:{role:'employee'},order:[['name','ASC']]}).then(function(data){
+    // res.send(data)
+    res.render('employeeList',{dataUsers:data})
+  })
 })
 
 router.get('/assignTask', function(req, res){

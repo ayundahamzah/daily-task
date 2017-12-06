@@ -11,13 +11,15 @@
         <th>Employee</th>
         <th></th>
       </tr>
-      <% for(let i = 1; i < 20; i++){ %>
+      <% let count = 1 %>
+      <% dataUsers.forEach(function(user){ %>
         <tr>
-          <td><%= i %></td>
-          <td>Employee number <%= i %></td>
-          <td><a href="/users/report/<%= i %>/employee">Details</a></td>
+          <td><%= count %></td>
+          <td><%= user.name %></td>
+          <td><a href="/users/report/<%= user.id %>/employee">Details</a></td>
+          <% count++ %>
         </tr>
-      <% } %>
+      <% }) %>
     </table>
   </center></body>
 </html>
