@@ -9,14 +9,26 @@ router.get('/', function(req, res){
 })
 
 router.get('/:id/profile', function(req, res){
-  // res.send('profile')
-  res.render('profile')
+  let userId = req.params.id
+  Model.User.findById(userId).then(function(data){
+    // res.send(data)
+    res.render('profile',{dataUser:data})
+  })
 })
 
 router.get('/:id/profile/edit', function(req, res){
-  // res.send('edit')
-  res.render('profileEdit')
+  let userId = req.params.id
+  Model.User.findById(userId).then(function(data){
+    res.render('profileEdit',{dataUser:data})
+  })
 })
+router.post('/:id/profile/edit', function(req, res){
+  let user = {
+    
+  }
+  Model.User.update()
+})
+
 
 router.get('/report/:id/employee', function(req, res){
   // res.send('employee')

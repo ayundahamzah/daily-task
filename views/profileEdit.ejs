@@ -6,19 +6,19 @@
   </head>
   <body><center>
     <h1>Role</h1>
-    <form class="" action="index.html" method="post">
+    <form class="" action="/users/<%= dataUser.id %>/profile/edit" method="post">
       <table>
         <tr>
           <th>Name: </th>
-          <td><input type="text" name="" value="Owner / Employee Name"></td>
+          <td><input type="text" name="name" value="<%= dataUser.name %>"></td>
         </tr>
         <tr>
           <th>Email: </th>
-          <td><input type="text" name="" value="mymail@mail.com"></td>
+          <td><input type="text" name="email" value="<%= dataUser.email %>"></td>
         </tr>
         <tr>
           <th>Password: </th>
-          <td><input type="password" name="" value="#########"></td>
+          <td><input type="password" name="password" value="<%= dataUser.password %>"></td>
         </tr>
       </table>
       <br>
