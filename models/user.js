@@ -5,7 +5,6 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     name: DataTypes.STRING,
     role: DataTypes.STRING
-  }
   });
   User.associate = function(models){
     User.belongsToMany(models.Task, {through:"UserTask"})
