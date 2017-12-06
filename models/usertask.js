@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.STRING,
     realTimeOfWork: DataTypes.INTEGER,
     ownerIncome: DataTypes.INTEGER,
-    employeeIncome: DataTypes.INTEGER
-  }
+    employeeIncome: DataTypes.INTEGER,
+    createdBy:DataTypes.STRING
   });
   UserTask.associate = function(models){
     UserTask.belongsTo(models.Task)

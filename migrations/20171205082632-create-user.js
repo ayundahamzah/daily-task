@@ -9,8 +9,33 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       email: {
-        type: Sequelize.STRING
-      },
+         type : DataTypes.STRING,
+         validate : {
+           notEmpty: {
+             msg: "Maaf Email Tidak Boleh Kosong"
+           },
+           isEmail: {
+             msg : "Maaf Format Email Anda Salah"
+           },
+           isUnique: function(value,next){
+             let self = this
+             Student.find({
+               where:{
+                 email:value,
+                 id:{[sequelize.Op.ne]:self.id}
+               }
+             }).then(student=>{
+               if(student){
+                 return next('Maaf, email sudah terdaftar!')
+               }else{
+                 next()  
+               }
+             }).catch(err=>{
+               return next(err)
+             })
+           }
+         }
+       },
       password: {
         type: Sequelize.STRING
       },
