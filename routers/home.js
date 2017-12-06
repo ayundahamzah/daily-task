@@ -20,7 +20,9 @@ router.post('/login', function(req, res){
       if(result){
         // res.send('success')
         req.session.isLogin = true
-        res.redirect('/')
+        req.session.role = user.role
+        res.send(req.session)
+        // res.redirect('/')
       }else{
         res.send('failed')
       }

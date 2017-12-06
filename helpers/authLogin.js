@@ -1,6 +1,7 @@
 function checkLogin(req,res,next) {
   let login = req.session.isLogin
-  if(login){
+  let role = req.session.role
+  if(login && role){
     next()
   }else{
     res.redirect('/login')
