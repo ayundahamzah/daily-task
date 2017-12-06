@@ -41,9 +41,12 @@ router.post('/:id/profile/edit', function(req, res){
 
 
 router.get('/report/:id/employee', function(req, res){
-  
-  // res.send('employee')
-  res.render('employeeReport', {id:req.params.id})
+  let userId = req.params.id
+  Model.User.findById(userId).then(function(dataUser){
+    Model.UserTask.findAll({where:{UserId:userId, status:'done'}, include:[Model.Task]}).then(function(dataUserTask){
+      res.render('employeeReport', {dataUser:dataUser, dataUserTask:dataUserTask})
+    })
+  })
 })
 
 router.get('/report/:id/owner', function(req, res){
