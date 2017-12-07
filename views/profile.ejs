@@ -2,27 +2,23 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Profile</title>
+    <title>Profile <%= dataUser.name %></title>
   </head>
   <body><center>
-    <h1>Role</h1>
+    <h1><%= dataUser.role %></h1>
     <table>
       <tr>
         <th>Name: </th>
-        <td>Owner / Employee Name</td>
+        <td><%= dataUser.name %></td>
       </tr>
       <tr>
         <th>Email: </th>
-        <td>mymail@mail.com</td>
-      </tr>
-      <tr>
-        <th>Password: </th>
-        <td>#########</td>
+        <td><%= dataUser.email %></td>
       </tr>
     </table>
     <br>
-    <form class="" action="index.html">
-      <input type="submit" name="" value="">
+    <form class="" action="/users/<%= dataUser.id %>/profile/edit">
+      <input type="submit" name="" value="Edit Profile">
     </form>
   </center></body>
 </html>

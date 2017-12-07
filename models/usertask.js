@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     endPoint:DataTypes.STRING
   });
   UserTask.associate = function(models){
-    UserTask.belongsTo(models.Task)
     UserTask.belongsTo(models.User)
+    UserTask.belongsTo(models.Task)
   }
   return UserTask;
 };
