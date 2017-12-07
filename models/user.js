@@ -10,15 +10,17 @@ module.exports = (sequelize, DataTypes) => {
   });
   
   User.beforeCreate((user,option)=>{
-    bcrypt.hash(user.password,5).then(hash=>{
+    return bcrypt.hash(user.password,5).then(hash=>{
       user.password=hash
     })
   })
   
-  User.prototype.check_password =function(plainPassword,cb){
+  User.prototype.check_password = function(plainPassword,cb){
     bcrypt.compare(plainPassword, this.password).then(function(res) {
+      console.log(res)
       cb(res)
-    });
+    })
+    .catch(err => console.log(err))
   }
   
   
