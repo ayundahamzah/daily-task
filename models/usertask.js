@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   UserTask.associate = function(models){
     UserTask.belongsTo(models.Task)
-    UserTask.belongsTo(models.Task)
+    UserTask.belongsTo(models.User)
   }
   return UserTask;
 };
