@@ -95,6 +95,7 @@ router.post('/admin/:id', function(req, res){
     res.redirect('/users/admin')
   })
 })
+
 router.get('/admin/:id/delete', function(req, res){
   Model.User.destroy({where:{id:req.params.id}}).then(function(){
     res.redirect('/users/admin')
@@ -104,6 +105,7 @@ router.get('/admin/logout', function(req, res){
   req.session.isLogin = false
   res.redirect('/')
 })
+
 
 
 
