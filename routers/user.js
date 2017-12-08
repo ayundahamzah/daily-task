@@ -164,12 +164,4 @@ router.post('/:idUser/viewTask/:idTask', function(req, res){
 })
 
 
-// router.get('/monitorTask', function(req, res){
-//   Model.UserTask.findAll({include:[Model.User, Model.Task]})
-//   .then(function(data){
-//     res.render('monitorTask', {dataUserTasks:data})
-//   })
-// })
-
-
 module.exports = router
