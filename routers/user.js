@@ -147,7 +147,17 @@ router.get('/:id/viewTask', function(req, res){
 })
 router.post('/:idUser/viewTask/:idTask', function(req, res){
   Model.UserTask.update(req.body,{where:{UserId:req.params.idUser, TaskId: req.params.idTask}}).then(function(){
-    res.redirect(`/users/${req.params.idUser}/viewTask`)
+    Model.UserTask.findOne({where:{UserId:req.params.idUser, TaskId: req.params.idTask}}).then(function(data){
+      if (data.status == 'on-progress') {
+        Model.UserTask.update({startPoint:data.updatedAt}).then(function(){
+          res.redirect(`/users/${req.params.idUser}/viewTask`)
+        })
+      } else if(data.status == 'done') {
+        Model.UserTask.update({endPoint:data.updatedAt}).then(function(){
+          res.redirect(`/users/${req.params.idUser}/viewTask`)
+        })
+      }
+    })
   })
 })
 
