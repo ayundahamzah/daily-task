@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Employee List</title>
+  </head>
+  <body><center>
+    <table border='1' style='text-align: center'>
+      <tr>
+        <th>No</th>
+        <th>Employee</th>
+        <th>Role</th>
+        <th></th>
+        <th>Action</th>
+      </tr>
+      <% let count = 1 %>
+      <% dataUsers.forEach(function(user){ %>
+        <tr>
+          <td><%= count %></td>
+          <td><%= user.name %></td>
+          <td><%= user.role %></td>
+          <form class="" action="/users/admin/<%= user.id %>" method="post">
+            <td>
+            <select class="" name="role">
+                <option value="employee">employee</option>
+                <option value="manager">manager</option>
+                <option value="admin">admin</option>
+            </select>
+          </td>
+          <td>
+            <input type="submit" name="" value="Save">
+            <form class="" action="/users/admin/<%= user.id %>/delete" method="post">
+              <input type="submit" name="" value="Delete">
+            </form>
+          </td>
+          </form>
+          <% count++ %>
+        </tr>
+      <% }) %>
+    </table>
+  </center></body>
+</html>

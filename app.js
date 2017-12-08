@@ -19,11 +19,11 @@ app.set('view engine','ejs')
 //   res.send('alive')
 // })
 
-app.use('/',home)
-app.use('/users',user)
 app.use(session({
   secret: 'keyboard cat'
 }))
+app.use('/',home)
+app.use('/users',user)
 
 
 

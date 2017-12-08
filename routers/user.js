@@ -68,6 +68,23 @@ router.get('/employeeList', function(req, res){
   })
 })
 
+router.get('/admin', function(req, res){
+  if (req.session.role != 'admin') {
+    res.redirect('/')
+  } else {
+    Model.User.findAll({order:[['name','ASC']]}).then(function(data){
+      // res.send(data)
+      res.render('admin',{dataUsers:data})
+    })
+  }
+})
+router.post('/admin/:id', function(req, res){
+  Model.User.update({role:req.body.role},{where:{id:req.params.id}}).then(function(){
+    res.redirect('/users/admin')
+  })
+})
+
+
 router.get('/assignTask', function(req, res){
   //Model.User.findAll({where:{ }}) //rolenya:'employee', statusnya bukan 'idle' atau 'on progress'. Untuk nampilin dropdown user yg available
   Model.User.findAll({include: [Model.UserTask]}).then(function(dataUsers){
