@@ -7,8 +7,8 @@
   <body><center>
     <h2>Today Task</h2>
     <fieldset style='width: 20%'>
-    <h3><%= dataTask.Task %></h3>
-    <p><%= dataTask.estimatedTimeOfWork %> minutes</p>
+      <h3>You have start <%= dataToday.Task.Task %></h3>
+      <p>estimated time of work <%= dataToday.Task.estimatedTimeOfWork %> minutes</p>
   </fieldset>
   <br>
     <form class="" action="/users/<%= dataToday.UserId %>/viewTask/<%= dataToday.TaskId %>" method="post">
