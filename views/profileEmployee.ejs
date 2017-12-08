@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Profile <%= dataUser.name %></title>
+  </head>
+  <body><center>
+    <h1><%= dataUser.role %></h1>
+    <table>
+      <tr>
+        <th>Name: </th>
+        <td><%= dataUser.name %></td>
+      </tr>
+      <tr>
+        <th>Email: </th>
+        <td><%= dataUser.email %></td>
+      </tr>
+    </table>
+    <br>
+    <form class="" action="/users/<%= dataUser.id %>/profile/edit">
+      <input type="submit" name="" value="Edit Profile">
+    </form>
+    <br>
+    <form class="" action="/users/report/<%= dataUser.id %>/employee">
+      <input type="submit" name="" value="Employee Report">
+    </form>
+    <br>
+    <form class="" action="/users/<%= dataUser.id %>/viewTask">
+      <input type="submit" name="" value="View Task">
+    </form>
+    <br>
+    <form class="" action="/users/logout">
+      <input type="submit" name="" value="Logout">
+    </form>
+  </center></body>
+</html>
