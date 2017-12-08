@@ -35,5 +35,27 @@
         </form>
       </tr>
     </table>
+    <br>
+    <h2>Task Monitor</h2>
+    <table border='1' style = 'text-align: center'>
+      <tr>
+        <th>No</th>
+        <th>Employee</th>
+        <th>Task</th>
+        <th>Status</th>
+        <th>ETA</th>
+      </tr>
+      <% let count =1 %>
+      <% dataUserTasks.forEach(function(userTask){ %>
+        <tr>
+          <td><%= count %></td>
+          <td><%= userTask.User.name %></td>
+          <td><%= userTask.Task.Task %></td>
+          <td><%= userTask.status %></td>
+          <td><%= userTask.Task.estimatedTimeOfWork %> minutes</td>
+        </tr>
+        <% count++ %>
+      <% }) %>
+    </table>
   </center></body>
 </html>

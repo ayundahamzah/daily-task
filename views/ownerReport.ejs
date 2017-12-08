@@ -5,8 +5,36 @@
     <title>Owner Report</title>
   </head>
   <body><center>
-    <form class="" action="/users/report/1/owner" method="post">
+    <form class="" action="/users/report/<%= dataUser.id %>/owner" method="post">
       <p>Date From: <input type="date" name="start" value=""> &nbsp Date Until: <input type="date" name="end" value=""> &nbsp <input type="submit" name="" value="Search"></p>
     </form>
+    <table border='1' style='text-align:center'>
+      <tr>
+        <th>No</th>
+        <th>Task</th>
+        <th>Employee</th>
+        <th>Date/Time Start</th>
+        <th>Date/Time Finish</th>
+        <th>Estimate in minutes</th>
+        <th>Realtime in minutes</th>
+        <th>Employee Income</th>
+        <th>Owner Income</th>
+      </tr>
+      <% let count = 1 %>
+      <% dataUserTask.forEach(function(data){ %>
+        <tr>
+          <td><%= count %></td>
+          <td><%= data.Task.Task %></td>
+          <td><%= data.User.name %></td>
+          <td><%= data.createdAt %></td>
+          <td><%= data.updatedAt %></td>
+          <td><%= data.Task.estimatedTimeOfWork %></td>
+          <td><%= data.realTimeOfWork %></td>
+          <td><%= data.Task.price / 10 %></td>
+          <td><%= data.Task.price - (data.Task.price / 10)%></td>
+        </tr>
+        <% count++ %>
+      <% }) %>
+    </table>
   </center></body>
 </html>

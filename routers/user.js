@@ -4,21 +4,27 @@ const Model = require('../models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
 
-router.get('/', function(req, res){
-  res.send('users')
+router.get('/logout', function(req, res){
+  req.session.isLogin = false
+  res.redirect('/')
 })
 
 router.get('/:id/profile', function(req, res){
   let userId = req.params.id
   Model.User.findById(userId).then(function(data){
     // res.send(data)
-    res.render('profile',{dataUser:data})
+    if (req.session.role == 'employee') {
+      res.render('profileEmployee',{dataUser:data})
+    } else if (req.session.role == 'manager') {
+      res.render('profileManager',{dataUser:data})
+    }
   })
 })
 
 router.get('/:id/profile/edit', function(req, res){
   let userId = req.params.id
   Model.User.findById(userId).then(function(data){
+    // res.send(data)
     res.render('profileEdit',{dataUser:data})
   })
 })
@@ -50,12 +56,18 @@ router.get('/report/:id/employee', function(req, res){
 })
 
 router.get('/report/:id/owner', function(req, res){
-  Model.User.findById(1).then(function(data){
-    // res.send(data.createdAt)
-    res.render('ownerReport')
+  let userId = req.params.id
+  Model.User.findById(userId).then(function(dataUser){
+    Model.UserTask.findAll({order:[['updatedAt','DESC']],include:[Model.User,Model.Task]}).then(function(dataUserTask){
+      // res.send(dataUserTask)
+      res.render('ownerReport',{dataUser:dataUser, dataUserTask:dataUserTask})
+    })
   })
 })
 router.post('/report/:id/owner', function(req, res){
+  Model.UserTask.findAll({where:{createdAt:req.body.start,updatedAt:req.body.end}}).then(function(data){
+    
+  })
   // console.log(typeof req.body.start);
   res.send(req.body)
 })
@@ -83,14 +95,27 @@ router.post('/admin/:id', function(req, res){
     res.redirect('/users/admin')
   })
 })
+router.get('/admin/:id/delete', function(req, res){
+  Model.User.destroy({where:{id:req.params.id}}).then(function(){
+    res.redirect('/users/admin')
+  })
+})
+router.get('/admin/logout', function(req, res){
+  req.session.isLogin = false
+  res.redirect('/')
+})
+
 
 
 router.get('/assignTask', function(req, res){
   //Model.User.findAll({where:{ }}) //rolenya:'employee', statusnya bukan 'idle' atau 'on progress'. Untuk nampilin dropdown user yg available
-  Model.User.findAll({include: [Model.UserTask]}).then(function(dataUsers){
+  Model.User.findAll({where:{role:'employee'},include: [Model.UserTask]}).then(function(dataUsers){
     Model.Task.findAll().then(function(dataTasks){
-      // res.send(dataUsers)
-      res.render('assignTask',{dataUsers:dataUsers, dataTasks:dataTasks})
+      Model.UserTask.findAll({include:[Model.User, Model.Task]})
+      .then(function(dataUserTasks){
+        // res.send(dataUsers)
+        res.render('assignTask',{dataUsers:dataUsers, dataTasks:dataTasks, dataUserTasks:dataUserTasks})
+      })
     })
   })
 })
@@ -99,34 +124,40 @@ router.post('/assignTask', function(req, res){
     userId: req.body.userId,
     taskId: req.body.taskId,
     status: 'idle',
-    createdBy: 'Owner'
+    createdBy: 'manager'
   }
   Model.UserTask.create({UserId: input.userId, TaskId: input.taskId, status: input.status, createdBy: input.createdBy}).then(function(){
     res.redirect('/users/assignTask')
   })
 })
 
-
-router.get('/:idUser/viewTask/:idTask', function(req, res){
-  Model.UserTask.findAll({where:{UserId: req.params.idUser,TaskId:req.params.idTask, status: {[Sequelize.Op.ne]: 'done'}}}).then(function(dataUserTasks){
-    Model.Task.find({where:{id:req.params.idTask}}).then(function(dataTask){
-      res.render('viewTask',{dataToday:dataUserTasks[0], dataTask:dataTask})
-    })
+router.get('/:id/viewTask', function(req, res){
+  Model.UserTask.findAll({where:{UserId: req.params.id, status: {[Sequelize.Op.ne]: 'done'}}, include:[Model.Task]}).then(function(data){
+    // res.send(data)
+    if (data == '') {
+      res.render('viewTaskDone')
+    } else if (data.status == 'on-progress') {
+      res.render('viewTaskOn',{dataToday:data[0]})
+    } else {
+      res.render('viewTaskIdle',{dataToday:data[0]})
+    }
+  }).catch(function(err){
+    console.log(err);
   })
 })
 router.post('/:idUser/viewTask/:idTask', function(req, res){
   Model.UserTask.update(req.body,{where:{UserId:req.params.idUser, TaskId: req.params.idTask}}).then(function(){
-    res.redirect(`/users/${req.params.idUser}/viewTask/${req.params.idTask}`)
+    res.redirect(`/users/${req.params.idUser}/viewTask`)
   })
 })
 
 
-router.get('/monitorTask', function(req, res){
-  Model.UserTask.findAll({include:[Model.User, Model.Task]})
-  .then(function(data){
-    res.render('monitorTask', {dataUserTasks:data})
-  })
-})
+// router.get('/monitorTask', function(req, res){
+//   Model.UserTask.findAll({include:[Model.User, Model.Task]})
+//   .then(function(data){
+//     res.render('monitorTask', {dataUserTasks:data})
+//   })
+// })
 
 
 module.exports = router
